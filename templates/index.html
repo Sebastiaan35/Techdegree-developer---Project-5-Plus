@@ -1,0 +1,34 @@
+{% extends "layout.html" %}
+
+
+{% block search %}
+
+<form method="POST" action="{{ url_for('search_by_title') }}" class="Search">
+  <input type='text' name='Search' class='Search' id='chatinput' placeholder="Search by title" style="
+    width: 10%;
+    position: absolute;">
+</form><br><br><br><br><br><br>
+<form method="POST" action="{{ url_for('search_by_tag') }}" class="Search">
+  <input type='text' name='Search' class='Search' id='chatinput' placeholder="Search by keyword" style="
+    width: 10%;
+    position: absolute;">
+</form>
+{% endblock %}
+
+
+{% block all_entries %}
+
+  <div class="entry-list">
+    {% for entry in stream %}
+        <article>
+                <h2><a href="{{ url_for('detail', id=entry.entry_id) }}">{{ entry.title }}</a></h2>
+                {% for tag in entry.tags.split(', ') %}
+                  <i><a href="{{ url_for('retrieve_by_tag', tag=tag) }}">{{ tag }}</a></i>
+                {% endfor %}
+                <br><br>
+                <time datetime="{{ entry.date }}">Date: {{ entry.date }}</time> - By: {{ entry.owner }}
+        </article>
+    {% endfor %}
+
+  </div>
+{% endblock %}
