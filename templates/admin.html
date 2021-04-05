@@ -4,10 +4,17 @@
 {% block users %}
 
   <div class="user-list">
-    {% for user in users %}
+    <h2>Edit Admin Rights</h2><br><br>
+    <form method="POST" action="{{ url_for('admin') }}" class="form">
+      {% for user in users %}
         <article>
-          <input type="checkbox" name={{ user.username }} value={{ user.username }}>
-          <label for={{ user.username }}>{{ user.username }}</label><br>
+          <label class="container">{{ user.username }}
+            <input type="checkbox"
+              {% if user.is_admin %}
+                checked= "checked">
+              {% endif %}
+            <span class="checkmark"></span>
+          </label><br>
         </article>
     {% endfor %}
     <br><br>

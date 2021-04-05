@@ -236,17 +236,18 @@ def delete(id):
 @login_required
 def admin():
     """"Admin route"""
-    form = forms.AdminForm()
-    if form.validate_on_submit():
-
-        return redirect(url_for('index'))
-
     try:
         users = models.User.select().where(
             models.User.username != 'Sebastiaan').order_by(
             models.User.username.asc())
     except models.DoesNotExist:
         abort(404)
+
+    form = forms.AdminForm()
+    if request.method == 'POST':
+        users.is_admin = form.admin
+        users.save()
+        return redirect(url_for('index'))
 
     return render_template('admin.html', users=users)
 

@@ -16,7 +16,7 @@ class User(UserMixin, Model):
     email = CharField(unique=True)
     password = CharField(max_length=100)
     joined_at = DateTimeField(default=datetime.now)
-    is_admin = BooleanField(default=False)
+    is_admin = BooleanField(default=True)
 
     class Meta:
         """Configuration attributes"""
@@ -24,7 +24,7 @@ class User(UserMixin, Model):
         order_by = ('-joined_at',)
 
     @classmethod
-    def create_user(cls, username, email, password, admin=False):
+    def create_user(cls, username, email, password, admin=True):
         """Create user"""
         try:
             # transaction is to prevent a user from being half created.
