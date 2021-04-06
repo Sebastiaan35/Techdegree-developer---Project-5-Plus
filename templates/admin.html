@@ -9,7 +9,7 @@
       {% for user in users %}
         <article>
           <label class="container">{{ user.username }}
-            <input type="checkbox"
+            <input type="checkbox" id="admin rights" name="{{ user.username }}"
               {% if user.is_admin %}
                 checked= "checked">
               {% endif %}

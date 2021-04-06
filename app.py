@@ -245,8 +245,13 @@ def admin():
 
     form = forms.AdminForm()
     if request.method == 'POST':
-        users.is_admin = form.admin
-        users.save()
+        for user in users:
+            print(user.username, request.form.get(user.username))
+            if request.form.get(user.username) is None:
+                user.is_admin = 0
+            else:
+                user.is_admin = 1
+            user.save()
         return redirect(url_for('index'))
 
     return render_template('admin.html', users=users)
